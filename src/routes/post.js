@@ -9,6 +9,11 @@ const {
   del,
   update,
   getPostById,
+  getAllPostsAdmin,
+  getPostsByStatus,
+  acceptPost,
+  cancelPost,
+  getPostByeditorId,
 } = require("../controlls/post");
 const router = express.Router();
 router.get("/get_all", [authMiddleware], getAllPosts);
@@ -16,5 +21,18 @@ router.get("/get_one/:id", getPostById);
 router.post("/add", [authAdmin, authEditor], add);
 router.delete("/delete", [authAdmin, authReviewer], del);
 router.put("/update", [authAdmin, authEditor], update);
-
+// ______admins_____
+router.get("/admin/all", [authAdmin, authReviewer], getAllPostsAdmin);
+router.get(
+  "/admin/status/:status",
+  [authAdmin, authReviewer],
+  getPostsByStatus
+);
+router.get("/admin/accept/:id", [authAdmin, authReviewer], acceptPost);
+router.get("/admin/cancel/:id", [authAdmin, authReviewer], cancelPost);
+router.get(
+  "/admin/get_all_by_editor_id/:id",
+  [authAdmin, authEditor],
+  getPostByeditorId
+);
 module.exports = router;
