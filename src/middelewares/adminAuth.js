@@ -7,18 +7,18 @@ module.exports=( req,res,next)=>{
         
         token=req.headers.authorization.split(' ')[1]
         try{
-            const decode= jwt.verify(token,process.env.SECERT_TOKEN);
+            const decode=  jwt.verify(token,process.env.SECERT_TOKEN);
           
-            req.user=decode
+            req.admin=decode
             next()
         }
         catch(err){
           
-            res.status(403).send("Not authentcation or No token")
+            res.status(403).send("Not authentication or No token")
         }
 
     } 
     if(!token){
-      next()
+        res.status(403).send('Not authentication')
     }
 }
