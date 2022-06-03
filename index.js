@@ -4,6 +4,10 @@ const app=express()
 const userRouter=require('./src/routes/users')
 const handleError=require('./src/middelewares/handelError')
 const authRouter=require('./src/routes/login')
+
+const CategoryRoute = require('./src/routes/categories');
+const SubCategoryRoute = require('./src/routes/subCategory');
+
 var cors = require('cors')
 
 const port=process.env.PORT||3000
@@ -17,6 +21,10 @@ app.use(express.json())
 app.use('/user',userRouter)
 
 app.use('/login',authRouter)
+
+app.use("/api/categories", CategoryRoute);
+app.use("/api/subcategories", SubCategoryRoute);
+
 app.use(handleError)
 
 
