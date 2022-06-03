@@ -7,21 +7,9 @@ const authRouter=require('./src/routes/login')
 const postRouter=require('./src/routes/post')
 const adminAuthRouter=require('./src/routes/adminLogin')
 const adminRouter=require('./src/routes/admin')
+const CategoryRoute = require('./src/routes/categories')
+const SubCategoryRoute = require('./src/routes/subCategory')
 var cors = require('cors')
-const express = require("express");
-require("express-async-errors");
-const app = express();
-const userRouter = require("./src/routes/users");
-const handleError = require("./src/middelewares/handelError");
-const authRouter = require("./src/routes/login");
-
-const CategoryRoute = require("./src/routes/categories");
-const SubCategoryRoute = require("./src/routes/subCategory");
-
-const adminAuthRouter = require("./src/routes/adminLogin");
-const adminRouter = require("./src/routes/admin");
-var cors = require("cors");
-
 const port = process.env.PORT || 3000;
 app.use(cors());
 require("dotenv/config");

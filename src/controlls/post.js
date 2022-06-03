@@ -1,5 +1,5 @@
 const PostModel = require("../models/Post");
-const UserModel = require("../models/user")
+const UserModel = require("../models/user");
 const {
   addValidation,
   delValidation,
@@ -17,8 +17,7 @@ const getPostById = async (req, res, next) => {
   res.status(200).json(post);
 };
 
-const getAllUsers = async (req, res, next) => {
-  //   const posts = await PostModel.find();
+const getAllPosts = async (req, res, next) => {
   const posts = await PostModel.aggregate([
     {
       $group: {
@@ -26,20 +25,30 @@ const getAllUsers = async (req, res, next) => {
         posts: { $push: "$$ROOT" },
       },
     },
+    {
+        $project: {
+            posts: {
+                $slice: ['$posts', 0, 4],
+            },
+         
+        },
+    },
   ]);
-  if(req.user)
-  {
-    const user = await UserModel.findById(req.user);
-    const response = posts.filter(category=>(user.intrests.find(category._id)))
-    return  res.status(200).json(response);
-   
+  if (req.user) {
+    const { intersted } = await UserModel.findById(req.user._id);
+    console.log(intersted);
+    const data = posts.filter((element) =>
+      intersted.find((interstedElement) => interstedElement == element._id)
+    );
+    if (intersted.length !== 0) {
+      return res.status(200).json(data);
+    }
   }
 
   res.status(200).json(posts);
 };
 
 const add = async (req, res, next) => {
-  const { title, description, image, category, subCategory, regien } = req.body;
   const { value, error } = addValidation(req.body);
   if (error) {
     console.log(error);
@@ -81,4 +90,4 @@ const update = async (req, res, next) => {
   res.status(200).send(updateAck);
 };
 
-module.exports = { getAllUsers, add, del, update, getPostById };
+module.exports = { getAllPosts, add, del, update, getPostById };
