@@ -12,7 +12,7 @@ module.exports = (body) => {
       tlds: { allow: ["com", "net"] },
     }),
     image:Joi.string(),
-    intersted:Joi.array()
+    role:Joi.string().required()
   });
   return Schema.validate(body);
 };

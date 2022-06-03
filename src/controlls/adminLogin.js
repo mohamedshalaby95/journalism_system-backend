@@ -1,5 +1,5 @@
 const authValidation = require("../validations/auth");
-const userModel = require("../models/user");
+const adminModel = require("../models/admin");
 const _=require('lodash')
 
 const bycrpt=require('bcrypt')
@@ -14,25 +14,25 @@ async function login(req,res){
         throw new Error(`${error.details[0].message}`);
     }
     
- let user=await userModel.findOne({email:req.body.email})
- if(!user){
+ let admin=await adminModel.findOne({email:req.body.email})
+ if(!admin){
      res.status(403);
      throw new Error(`the email or password not valid `);
     }
   
    
     
-    const password= await bycrpt.compare(req.body.password,user.password)
+    const password= await bycrpt.compare(req.body.password,admin.password)
    
  if(!password){
     res.status(403);
     throw new Error(`the email or password not valid `);  
  }
- const token=user.generatetoken()
- user=_.pick(user,["firstName","lastName","image","intersted"])
+ const token=admin.generatetoken()
+ admin=_.pick(admin,["firstName","lastName","image","role"])
 
  res.status(200)
-.send({...user,token})
+.send({...admin,token})
 
 
 }
