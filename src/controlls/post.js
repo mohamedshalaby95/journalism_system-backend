@@ -26,12 +26,11 @@ const getAllPosts = async (req, res, next) => {
       },
     },
     {
-        $project: {
-            posts: {
-                $slice: ['$posts', 0, 4],
-            },
-         
+      $project: {
+        posts: {
+          $slice: ["$posts", 0, 4],
         },
+      },
     },
   ]);
   if (req.user) {
@@ -90,4 +89,48 @@ const update = async (req, res, next) => {
   res.status(200).send(updateAck);
 };
 
-module.exports = { getAllPosts, add, del, update, getPostById };
+// ---------------------------------administrations------------------------------
+const getAllPostsAdmin = async (req, res, next) => {
+  const posts = await PostModel.find();
+  res.status(200).json(posts);
+};
+const getPostsByStatus = async (req, res, next) => {
+  const { status } = req.params;
+  const posts = await PostModel.find({ status });
+  res.status(200).json(posts);
+};
+const acceptPost = async (req, res, next) => {
+  const { id } = req.params;
+  const postAck = await PostModel.updateOne(
+    { _id: id },
+    { status: "accepted" }
+  );
+  res.status(200).json(postAck);
+};
+const cancelPost = async (req, res, next) => {
+  const { id } = req.params;
+  const postAck = await PostModel.updateOne(
+    { _id: id },
+    { status: "canceled" }
+  );
+  res.status(200).json(postAck);
+};
+const getPostByeditorId=async(req,res,next)=>{
+const {id} = req.params;
+const posts = await PostModel.find({auther:id});
+res.status(200).json(posts);
+
+}
+
+module.exports = {
+  getAllPosts,
+  add,
+  del,
+  update,
+  getPostById,
+  getAllPostsAdmin,
+  getPostsByStatus,
+  acceptPost,
+  cancelPost,
+  getPostByeditorId
+};
