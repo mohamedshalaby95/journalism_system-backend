@@ -4,6 +4,7 @@ const app=express()
 const userRouter=require('./src/routes/users')
 const handleError=require('./src/middelewares/handelError')
 const authRouter=require('./src/routes/login')
+const postRouter=require('./src/routes/post')
 var cors = require('cors')
 
 const port=process.env.PORT||3000
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use('/user',userRouter)
 
 app.use('/login',authRouter)
+app.use('/posts',postRouter)
 app.use(handleError)
 
 
