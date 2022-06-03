@@ -31,6 +31,11 @@ const Post = new schema(
       type: String,
       required: true,
     },
+    status:{
+      type:String, 
+      enum: ['pending', 'accepted','canceled'],
+      default:"pending"
+    }
   },
   { timestamps: true }
 );
