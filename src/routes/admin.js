@@ -4,8 +4,8 @@ const adminAuth=require("../middelewares/adminAuth");
 const administrator=require("../middelewares/administrator")
 
 router.post("/"
-// ,
-// [adminAuth,administrator]
+,
+[adminAuth,administrator]
 ,adminControll.addAdmin)
 router.patch("/:id",adminAuth,adminControll.updateAdmin)
 module.exports=router
