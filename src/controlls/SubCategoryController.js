@@ -14,12 +14,16 @@ const addSubCategory = async (req, res) => {
     
 
     const category = await Category.findOne({ title: req.body.parent });
+    console.log( category)
+
     if (category) {
       const newSubCategory = await new SubCategory({
         title: req.body.title,
         parent: category._id,
+        // parent: req.body.parent,
       });
       const subCategory = await newSubCategory.save();
+
       if (subCategory) {
         res.status(200).send(subCategory);
       } else {
@@ -92,10 +96,15 @@ const deleteSubCategory = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+const getAllSubCategories=async(req,res)=>{
+const subCategories= await  SubCategory.find();
+res.status(200).send(subCategories);
+}
 
 module.exports = {
   getAllSubCategoriesByCategory,
   deleteSubCategory,
   addSubCategory,
   updateSubCategory,
+  getAllSubCategories
 };
