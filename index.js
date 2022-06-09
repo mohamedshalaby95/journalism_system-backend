@@ -1,3 +1,4 @@
+
 const express = require("express");
 require("express-async-errors");
 const app = express();
@@ -11,6 +12,7 @@ const CategoryRoute = require("./src/routes/categories");
 const SubCategoryRoute = require("./src/routes/subCategory");
 var cors = require("cors");
 const port = process.env.PORT || 4000;
+
 app.use(cors());
 require("dotenv/config");
 require("./config/connectdb")();
