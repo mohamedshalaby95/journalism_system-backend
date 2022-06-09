@@ -10,7 +10,7 @@ const adminRouter=require('./src/routes/admin')
 const CategoryRoute = require('./src/routes/categories')
 const SubCategoryRoute = require('./src/routes/subCategory')
 var cors = require('cors')
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 app.use(cors());
 require("dotenv/config");
 require("./config/connectdb")();

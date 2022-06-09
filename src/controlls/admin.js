@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const _ = require("lodash");
 
 async function addAdmin(req, res) {
+  console.log(req.body);
   const { error } = adminValidation(req.body);
 
   if (error) {
@@ -30,7 +31,7 @@ async function addAdmin(req, res) {
   admin = await admin.save();
 
   const token = admin.generatetoken();
-  admin = _.pick(admin, ["firstName", "lastName", "image", "role"]);
+  admin = _.pick(admin, ["_id","firstName", "lastName", "image", "role"]);
 
   res.status(201).send({ ...admin, token });
 }
@@ -71,8 +72,28 @@ async function updateAdmin(req, res) {
   });
  admin = await admin.save();
   const token =admin.generatetoken();
- admin = _.pick(admin, ["firstName", "lastName", "image", "role"]);
+ admin = _.pick(admin, ["_id","firstName", "lastName", "image", "role"]);
 
   res.status(200).send({ ...admin, token });
+ 
 }
-module.exports = { addAdmin,updateAdmin };
+
+async function getAdmins(req, res) {
+
+  // console.log("here",admins)
+ let admins = await adminModel.find({})
+
+ admins = admins.map(admin=> _.pick(admin, ["_id","firstName", "lastName", "email", "role"]))
+ res.status(200).send(admins );
+}
+
+
+async function deleteAdmin(req, res) {
+
+  // console.log("here",admins)
+ let admin= await adminModel.findByIdAndDelete(req.params.id)
+
+
+ res.status(200).send(admin._id );
+}
+module.exports = { addAdmin,updateAdmin ,getAdmins,deleteAdmin};
