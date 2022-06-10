@@ -45,7 +45,7 @@ const updateCategory = async (req, res) => {
     }
     const category = await Category.findById(req.params.id);
     if (category) {
-      await Category.updateOne({ _id: category.id }, req.body, {
+     await Category.updateOne({ _id: category.id }, req.body, {
         returnOriginal: true,
       });
       res.status(200).send(category);
@@ -53,22 +53,23 @@ const updateCategory = async (req, res) => {
       res.status(400).send("Category Not Found");
     }
   } catch (err) {
+    console.log(err)
     res.status(500).send("Server Error");
   }
 };
 
 const deleteCategory = async (req, res) => {
-  try {
+  // try {
     const category = await Category.findById(req.params.id);
     if (category) {
-      await Category.deleteOne({ _id: category.id });
-      res.status(200).send(category);
+      const delack = await Category.deleteOne({ _id: category.id });
+      return res.status(200).json(delack);
     } else {
-      res.status(400).send("Category Not Found");
+      return res.status(400).json("Category Not Found");
     }
-  } catch (err) {
-    res.status(500).send("Server Error");
-  }
+  // } catch (err) {
+  //   return res.status(500).json("Server Error");
+  // }
 };
 
 module.exports = {
