@@ -38,20 +38,20 @@ async function addUser(req, res, next) {
 }
 
 async function updateUser(req, res) {
- 
+ console.log(req.user._id)
 
-  const { error } = userValidation(req.body);
+  // const { error } = userValidation(req.body);
 
-  if (error) {
+  // if (error) {
     
-    res.status(400)
-    throw new Error(`${error.details[0].message}`);
+  //   res.status(400)
+  //   throw new Error(`${error.details[0].message}`);
     
-  }
+  // }
 
   let user = await userModel.findOne({ email: req.body.email });
 
-  if (user && user._id != req.params.id) {
+  if (user && user._id != req.user._id) {
     res.status(409);
     throw new Error(`This Email is Registed`);
   
@@ -61,7 +61,7 @@ async function updateUser(req, res) {
     req.body.password = await bcrypt.hash(req.body.password, salt);
   }
 
-  user = await userModel.findByIdAndUpdate(req.params.id, {
+  user = await userModel.findByIdAndUpdate(req.user._id, {
     $set: {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
