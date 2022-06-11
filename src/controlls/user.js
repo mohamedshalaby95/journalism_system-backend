@@ -81,4 +81,12 @@ async function updateUser(req, res) {
  
   res.status(200).send({...user,token})
 }
-module.exports = { addUser, updateUser };
+async function getUser(req,res){
+  let users = await userModel.find({})
+  
+  // users=_.pick(users,["firstName","lastName","email"])
+
+
+    res.status(200).send(users)
+}
+module.exports = { addUser, updateUser, getUser };
