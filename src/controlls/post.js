@@ -115,13 +115,27 @@ const cancelPost = async (req, res, next) => {
   );
   res.status(200).json(postAck);
 };
-const getPostByeditorId=async(req,res,next)=>{
-const {id} = req.params;
-const posts = await PostModel.find({auther:id});
-res.status(200).json(posts);
-
-}
-
+const getPostByeditorId = async (req, res, next) => {
+  const { id } = req.params;
+  const posts = await PostModel.find({ auther: id });
+  res.status(200).json(posts);
+};
+const addView = async (req, res, next) => {
+  const postId = req.params.id;
+  const ack = await PostModel.updateOne(
+    { _id: postId },
+    { $inc: { views: 1 } }
+  );
+  return res.status(200).json(ack);
+};
+const mostViewed = async (req, res, next) => {
+  const posts = await PostModel.find().sort({ views: "desc" }).limit(4);
+  return res.status(200).json(posts);
+};
+const mostRecently = async (req, res, next) => {
+  const posts = await PostModel.find().sort({ createdAt: "desc" }).limit(4);
+  return res.status(200).json(posts);
+};
 module.exports = {
   getAllPosts,
   add,
@@ -132,5 +146,8 @@ module.exports = {
   getPostsByStatus,
   acceptPost,
   cancelPost,
-  getPostByeditorId
+  getPostByeditorId,
+  addView,
+  mostViewed,
+  mostRecently,
 };

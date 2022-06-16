@@ -14,13 +14,18 @@ const {
   acceptPost,
   cancelPost,
   getPostByeditorId,
+  addView,
+  mostViewed,
+  mostRecently,
 } = require("../controlls/post");
 const router = express.Router();
 router.get("/get_all", [authMiddleware], getAllPosts);
 router.get("/get_one/:id", getPostById);
-router.post("/add", 
-//[authAdmin, authEditor],
- add);
+router.post(
+  "/add",
+  //  [authAdmin, authEditor],
+  add
+);
 router.delete("/delete", [authAdmin, authReviewer], del);
 router.put("/update", [authAdmin, authEditor], update);
 // ______admins_____
@@ -37,4 +42,7 @@ router.get(
   [authAdmin, authEditor],
   getPostByeditorId
 );
+router.patch("/add_view/:id", addView);
+router.get("/most_viewed", mostViewed);
+router.get("/most_recently", mostRecently);
 module.exports = router;
