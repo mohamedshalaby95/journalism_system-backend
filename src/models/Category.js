@@ -7,11 +7,11 @@ const CategorySchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    image: {
-      type: String,
-      required: true,
-      default:"",
-    },
+    // image: {
+    //   type: String,
+    //   required: false,
+    //   default:"",
+    // },
   },
   { timestamps: true }
 );

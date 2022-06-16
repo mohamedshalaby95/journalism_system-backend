@@ -18,7 +18,9 @@ const {
 const router = express.Router();
 router.get("/get_all", [authMiddleware], getAllPosts);
 router.get("/get_one/:id", getPostById);
-router.post("/add", [authAdmin, authEditor], add);
+router.post("/add", 
+//[authAdmin, authEditor],
+ add);
 router.delete("/delete", [authAdmin, authReviewer], del);
 router.put("/update", [authAdmin, authEditor], update);
 // ______admins_____
