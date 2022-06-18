@@ -19,11 +19,13 @@ const {
   mostRecently,
 } = require("../controlls/post");
 const router = express.Router();
+
 router.get("/get_all", [authMiddleware], getAllPosts);
 router.get("/get_one/:id", getPostById);
 router.post(
   "/add",
   //  [authAdmin, authEditor],
+     [authAdmin],
   add
 );
 router.delete("/delete", [authAdmin, authReviewer], del);
