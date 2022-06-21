@@ -28,10 +28,14 @@ router.post(
      [authAdmin],
   add
 );
-router.delete("/delete", [authAdmin, authReviewer], del);
+router.delete("/delete/:id", 
+// [authAdmin, authReviewer],
+ del);
 router.put("/update", [authAdmin, authEditor], update);
 // ______admins_____
-router.get("/admin/all", [authAdmin, authReviewer], getAllPostsAdmin);
+router.get("/admin/all", 
+// [authAdmin, authReviewer], 
+getAllPostsAdmin);
 router.get(
   "/admin/status/:status",
   [authAdmin, authReviewer],

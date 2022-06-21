@@ -60,15 +60,15 @@ const add = async (req, res, next) => {
   res.status(200).json(post);
 };
 const del = async (req, res, next) => {
-  const { _id } = req.body;
-  const { value, error } = delValidation(req.body);
-  if (error) {
-    console.log(error);
-    return res.status(400).json({
-      message: error.details[0].message,
-    });
-  }
-  const delAck = await PostModel.findOneAndDelete({ _id });
+  const { id } = req.params;
+  // const { value, error } = delValidation(req.body);
+  // if (error) {
+  //   console.log(error);
+  //   return res.status(400).json({
+  //     message: error.details[0].message,
+  //   });
+  // }
+  const delAck = await PostModel.findOneAndDelete({ _id: id });
   if (!delAck) {
     return res.status(400).json({
       message: "this post dosen't exist",
