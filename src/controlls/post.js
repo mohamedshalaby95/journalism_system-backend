@@ -48,15 +48,15 @@ const getAllPosts = async (req, res, next) => {
 };
 
 const add = async (req, res, next) => {
-  const { value, error } = addValidation(req.body);
+  const { value, error } = addValidation({...req.body,auther:req.admin._id});
   if (error) {
     console.log(error);
     return res.status(400).json({
       message: error.details[0].message,
     });
   }
-  console.log(value);
-  const post = await new PostModel(req.body).save();
+  console.log(req.admin._id);
+  const post = await new PostModel({...req.body,auther:req.admin._id}).save();
   res.status(200).json(post);
 };
 const del = async (req, res, next) => {
