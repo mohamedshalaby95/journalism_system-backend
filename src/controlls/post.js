@@ -20,6 +20,28 @@ const getPostById = async (req, res, next) => {
 const getAllPosts = async (req, res, next) => {
   const posts = await PostModel.aggregate([
     {
+      $lookup: {
+        from: "admins",
+        localField: "auther",
+        foreignField: "_id",
+        as: "auther",
+      },
+    },
+    {
+      $project: {
+        title: 1,
+        description: 1,
+        category: 1,
+        subCategory: 1,
+        likes: 1,
+        comments: 1,
+        region: 1,
+        autherFirstName: { $first: "$auther.firstName" },
+        autherLastName: { $first: "$auther.lastName" },
+        autherImage: { $first: "$auther.image" },
+      },
+    },
+    {
       $group: {
         _id: "$category",
         posts: { $push: "$$ROOT" },
