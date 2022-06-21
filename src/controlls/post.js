@@ -50,17 +50,18 @@ const getAllPosts = async (req, res, next) => {
 const add = async (req, res, next) => {
   const { value, error } = addValidation({...req.body,auther:req.admin._id});
   if (error) {
-    console.log(error);
+ 
     return res.status(400).json({
       message: error.details[0].message,
     });
   }
-  console.log(req.admin._id);
+
   const post = await new PostModel({...req.body,auther:req.admin._id}).save();
   res.status(200).json(post);
 };
 const del = async (req, res, next) => {
   const { id } = req.params;
+
   // const { value, error } = delValidation(req.body);
   // if (error) {
   //   console.log(error);
@@ -68,13 +69,15 @@ const del = async (req, res, next) => {
   //     message: error.details[0].message,
   //   });
   // }
+
   const delAck = await PostModel.findOneAndDelete({ _id: id });
+
   if (!delAck) {
     return res.status(400).json({
       message: "this post dosen't exist",
     });
   }
-  res.status(200).json(delAck);
+  res.status(200).json(id);
 };
 const update = async (req, res, next) => {
   const { _id } = req.body;
@@ -96,6 +99,7 @@ const getAllPostsAdmin = async (req, res, next) => {
 };
 const getPostsByStatus = async (req, res, next) => {
   const { status } = req.params;
+  console.log(status)
   const posts = await PostModel.find({ status });
   res.status(200).json(posts);
 };
@@ -105,7 +109,7 @@ const acceptPost = async (req, res, next) => {
     { _id: id },
     { status: "accepted" }
   );
-  res.status(200).json(postAck);
+  res.status(200).json(id);
 };
 const cancelPost = async (req, res, next) => {
   const { id } = req.params;
@@ -113,7 +117,7 @@ const cancelPost = async (req, res, next) => {
     { _id: id },
     { status: "canceled" }
   );
-  res.status(200).json(postAck);
+  res.status(200).json(id);
 };
 const getPostByeditorId = async (req, res, next) => {
   const { id } = req.params;

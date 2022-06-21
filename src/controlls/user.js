@@ -30,7 +30,7 @@ async function addUser(req, res, next) {
   
 
   const token=user.generatetoken()
-  user=_.pick(user,["firstName","lastName","image","intersted"])
+  user=_.pick(user,["firstName","lastName","image","intersted","email"])
  
   res.status(201).send({...user,token})
 
@@ -39,15 +39,6 @@ async function addUser(req, res, next) {
 
 async function updateUser(req, res) {
  console.log(req.user._id)
-
-  // const { error } = userValidation(req.body);
-
-  // if (error) {
-    
-  //   res.status(400)
-  //   throw new Error(`${error.details[0].message}`);
-    
-  // }
 
   let user = await userModel.findOne({ email: req.body.email });
 
