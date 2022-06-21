@@ -100,11 +100,51 @@ const getAllSubCategories=async(req,res)=>{
 const subCategories= await  SubCategory.find();
 res.status(200).send(subCategories);
 }
+const getAll=async(req,res,next)=>{
+  console.log("woked")
+  const posts = await SubCategory.aggregate([
+    {
+      "$lookup": {
+        "from": "categories",
+        "localField": "parent",
+        "foreignField": "_id",
+        "as": "category"
+      }
+    },
+    {
+      "$project": {
+        "title": 1,
+        "category":{$first: "$category.title"}
+      }
+    }
+    ,
+    {
+      $group: {
+        _id: "$category",
+        subCategories: { $push: "$$ROOT" },
+      }
+    }
+    // },
+    // {
+    //   $project: {
+    //     posts: {
+    //       $slice: ["$posts", 0, 4],
+    //     },
+    //   },
+    // },
+    
+    
+  ])
+  console.log(posts)
+  res.json(posts)
+}
+
 
 module.exports = {
   getAllSubCategoriesByCategory,
   deleteSubCategory,
   addSubCategory,
   updateSubCategory,
-  getAllSubCategories
+  getAllSubCategories,
+  getAll
 };

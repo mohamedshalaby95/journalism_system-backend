@@ -55,13 +55,13 @@ const add = async (req, res, next) => {
       message: error.details[0].message,
     });
   }
- 
+
   const post = await new PostModel({...req.body,auther:req.admin._id}).save();
   res.status(200).json(post);
 };
 const del = async (req, res, next) => {
   const { id } = req.params;
-  
+
   // const { value, error } = delValidation(req.body);
   // if (error) {
   //   console.log(error);
@@ -69,7 +69,9 @@ const del = async (req, res, next) => {
   //     message: error.details[0].message,
   //   });
   // }
-  const delAck = await PostModel.findOneAndDelete({ id });
+
+  const delAck = await PostModel.findOneAndDelete({ _id: id });
+
   if (!delAck) {
     return res.status(400).json({
       message: "this post dosen't exist",
@@ -117,13 +119,27 @@ const cancelPost = async (req, res, next) => {
   );
   res.status(200).json(id);
 };
-const getPostByeditorId=async(req,res,next)=>{
-const {id} = req.params;
-const posts = await PostModel.find({auther:id});
-res.status(200).json(posts);
-
-}
-
+const getPostByeditorId = async (req, res, next) => {
+  const { id } = req.params;
+  const posts = await PostModel.find({ auther: id });
+  res.status(200).json(posts);
+};
+const addView = async (req, res, next) => {
+  const postId = req.params.id;
+  const ack = await PostModel.updateOne(
+    { _id: postId },
+    { $inc: { views: 1 } }
+  );
+  return res.status(200).json(ack);
+};
+const mostViewed = async (req, res, next) => {
+  const posts = await PostModel.find().sort({ views: "desc" }).limit(4);
+  return res.status(200).json(posts);
+};
+const mostRecently = async (req, res, next) => {
+  const posts = await PostModel.find().sort({ createdAt: "desc" }).limit(4);
+  return res.status(200).json(posts);
+};
 module.exports = {
   getAllPosts,
   add,
@@ -134,5 +150,8 @@ module.exports = {
   getPostsByStatus,
   acceptPost,
   cancelPost,
-  getPostByeditorId
+  getPostByeditorId,
+  addView,
+  mostViewed,
+  mostRecently,
 };
