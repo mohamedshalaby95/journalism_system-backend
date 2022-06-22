@@ -39,6 +39,7 @@ const getAllPosts = async (req, res, next) => {
         autherFirstName: { $first: "$auther.firstName" },
         autherLastName: { $first: "$auther.lastName" },
         autherImage: { $first: "$auther.image" },
+        autherId: { $first: "$auther._id" },
       },
     },
     {
