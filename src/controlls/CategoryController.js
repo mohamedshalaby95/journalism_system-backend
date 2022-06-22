@@ -1,5 +1,6 @@
 const categoryValidators = require("../validations/CategoryValidators");
 const Category = require("../models/Category");
+const PostsModel =require("../models/Post")
 
 const addCategory = async (req, res) => {
   const { error } = categoryValidators(req.body);
@@ -72,6 +73,10 @@ const deleteCategory = async (req, res) => {
   //   return res.status(500).json("Server Error");
   // }
 };
+const getCategoryPostsBycategoryName =async(req,res,next)=>{
+  const {category}=req.params
+   const posts=await PostsModel.find({category})
+}
 
 module.exports = {
   deleteCategory,

@@ -9,6 +9,7 @@ const adminAuthRouter = require("./src/routes/adminLogin");
 const adminRouter = require("./src/routes/admin");
 const CategoryRoute = require("./src/routes/categories");
 const SubCategoryRoute = require("./src/routes/subCategory");
+const AutherRoute = require("./src/routes/auther");
 var cors = require("cors");
 const port = process.env.PORT || 4000;
 
@@ -32,6 +33,7 @@ app.use("/api/subcategories", SubCategoryRoute);
 
 app.use("/admin", adminRouter);
 app.use("/adminAuth", adminAuthRouter);
+app.use("/auther", AutherRoute);
 app.use(handleError);
 
 app.listen(port, (error) => {

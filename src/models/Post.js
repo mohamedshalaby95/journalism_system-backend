@@ -26,8 +26,8 @@ const Post = new schema(
     comments: [
       { comment: String, user: { type: schema.Types.ObjectId, ref: "User" } },
     ],
-    auther: { type: schema.Types.ObjectId, ref: "Admin", required: true },
-    regien: {
+    auther: { type: schema.Types.ObjectId, ref: "admin", required: true },
+    region: {
       type: String,
       required: true,
     },

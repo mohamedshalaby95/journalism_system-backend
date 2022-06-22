@@ -20,6 +20,29 @@ const getPostById = async (req, res, next) => {
 const getAllPosts = async (req, res, next) => {
   const posts = await PostModel.aggregate([
     {
+      $lookup: {
+        from: "admins",
+        localField: "auther",
+        foreignField: "_id",
+        as: "auther",
+      },
+    },
+    {
+      $project: {
+        title: 1,
+        description: 1,
+        category: 1,
+        subCategory: 1,
+        likes: 1,
+        comments: 1,
+        region: 1,
+        autherFirstName: { $first: "$auther.firstName" },
+        autherLastName: { $first: "$auther.lastName" },
+        autherImage: { $first: "$auther.image" },
+        autherId: { $first: "$auther._id" },
+      },
+    },
+    {
       $group: {
         _id: "$category",
         posts: { $push: "$$ROOT" },
@@ -50,31 +73,34 @@ const getAllPosts = async (req, res, next) => {
 const add = async (req, res, next) => {
   const { value, error } = addValidation({...req.body,auther:req.admin._id});
   if (error) {
-    console.log(error);
+ 
     return res.status(400).json({
       message: error.details[0].message,
     });
   }
-  console.log(req.admin._id);
+
   const post = await new PostModel({...req.body,auther:req.admin._id}).save();
   res.status(200).json(post);
 };
 const del = async (req, res, next) => {
-  const { _id } = req.body;
-  const { value, error } = delValidation(req.body);
-  if (error) {
-    console.log(error);
-    return res.status(400).json({
-      message: error.details[0].message,
-    });
-  }
-  const delAck = await PostModel.findOneAndDelete({ _id });
+  const { id } = req.params;
+
+  // const { value, error } = delValidation(req.body);
+  // if (error) {
+  //   console.log(error);
+  //   return res.status(400).json({
+  //     message: error.details[0].message,
+  //   });
+  // }
+
+  const delAck = await PostModel.findOneAndDelete({ _id: id });
+
   if (!delAck) {
     return res.status(400).json({
       message: "this post dosen't exist",
     });
   }
-  res.status(200).json(delAck);
+  res.status(200).json(id);
 };
 const update = async (req, res, next) => {
   const { _id } = req.body;
@@ -96,6 +122,7 @@ const getAllPostsAdmin = async (req, res, next) => {
 };
 const getPostsByStatus = async (req, res, next) => {
   const { status } = req.params;
+  console.log(status)
   const posts = await PostModel.find({ status });
   res.status(200).json(posts);
 };
@@ -105,7 +132,7 @@ const acceptPost = async (req, res, next) => {
     { _id: id },
     { status: "accepted" }
   );
-  res.status(200).json(postAck);
+  res.status(200).json(id);
 };
 const cancelPost = async (req, res, next) => {
   const { id } = req.params;
@@ -113,7 +140,7 @@ const cancelPost = async (req, res, next) => {
     { _id: id },
     { status: "canceled" }
   );
-  res.status(200).json(postAck);
+  res.status(200).json(id);
 };
 const getPostByeditorId = async (req, res, next) => {
   const { id } = req.params;

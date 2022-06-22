@@ -6,7 +6,9 @@ const administrator=require("../middelewares/administrator")
 
 
 router.post("/",
-//[adminAuth,administrator],
+
+// [adminAuth,administrator],
+
 adminControll.addAdmin)
 router.get("/",adminControll.getAdmins)
 router.patch("/",
