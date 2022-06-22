@@ -8,7 +8,7 @@ const {
 
 const getPostById = async (req, res, next) => {
   const id = req.params.id;
-  const post = await PostModel.findById(id);
+  const post = await PostModel.findById(id).populate("auther",["firstName","lastName","image"])
   if (!post) {
     return res.status(400).json({
       message: "this post dosen't exist",
@@ -33,9 +33,11 @@ const getAllPosts = async (req, res, next) => {
         description: 1,
         category: 1,
         subCategory: 1,
+        image: 1,
         likes: 1,
         comments: 1,
         region: 1,
+        updatedAt: 1,
         autherFirstName: { $first: "$auther.firstName" },
         autherLastName: { $first: "$auther.lastName" },
         autherImage: { $first: "$auther.image" },
@@ -104,13 +106,13 @@ const del = async (req, res, next) => {
 };
 const update = async (req, res, next) => {
   const { _id } = req.body;
-  const { value, error } = updateValidation(req.body);
-  if (error) {
-    console.log(error);
-    return res.status(400).json({
-      message: error.details[0].message,
-    });
-  }
+  // const { value, error } = updateValidation(req.body);
+  // if (error) {
+  //   console.log(error);
+  //   return res.status(400).json({
+  //     message: error.details[0].message,
+  //   });
+  // }
   const updateAck = await PostModel.findOneAndUpdate({ _id }, req.body);
   res.status(200).send(updateAck);
 };
@@ -138,6 +140,7 @@ const cancelPost = async (req, res, next) => {
   const { id } = req.params;
   const postAck = await PostModel.updateOne(
     { _id: id },
+    
     { status: "canceled" }
   );
   res.status(200).json(id);
