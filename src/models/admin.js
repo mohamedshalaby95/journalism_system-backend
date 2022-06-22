@@ -5,37 +5,37 @@ const bcrypt = require("bcrypt");
 
 const adminSchema = new Schema({
   firstName: {
-       type: String,
-        required: true,
-         minlength: 3 
-        },
+    type: String,
+    required: true,
+    minlength: 3,
+  },
   lastName: {
-       type: String, 
-       required: true,
-        minlength: 3 
-    },
+    type: String,
+    required: true,
+    minlength: 3,
+  },
   email: {
-       type: String, 
-       required: true,
-        unique: true 
-    },
-  password: { 
-      type: String,
-       required: true
-     },
-  image:{
-      type:String,
-      default:""
-    },
-  role:{
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    default: "",
+  },
+  role: {
     type: String,
     enum: ["administrator", "editor", "reviewer"],
-    required:true
-    
-    },
-
-   })
-
+    required: true,
+  },
+  brief: {
+    type: String,
+  },
+});
 
 adminSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
@@ -49,7 +49,10 @@ adminSchema.pre("save", async function (next) {
 process.env.SECERT_TOKEN;
 
 adminSchema.methods.generatetoken = function () {
-  const token = jwt.sign({ _id: this._id,role:this.role}, `${process.env.SECERT_TOKEN}`);
+  const token = jwt.sign(
+    { _id: this._id, role: this.role },
+    `${process.env.SECERT_TOKEN}`
+  );
   return token;
 };
 const adminModel = model("admin", adminSchema);

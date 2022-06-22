@@ -8,7 +8,12 @@ const {
 
 const getPostById = async (req, res, next) => {
   const id = req.params.id;
-  const post = await PostModel.findById(id).populate("auther",["firstName","lastName","image"])
+  const post = await PostModel.findById(id).populate("auther", [
+    "firstName",
+    "lastName",
+    "image",
+    "brief",
+  ]);
   if (!post) {
     return res.status(400).json({
       message: "this post dosen't exist",
@@ -39,6 +44,7 @@ const getAllPosts = async (req, res, next) => {
         region: 1,
         updatedAt: 1,
         autherFirstName: { $first: "$auther.firstName" },
+        autherBrief: { $first: "$auther.brief" },
         autherLastName: { $first: "$auther.lastName" },
         autherImage: { $first: "$auther.image" },
         autherId: { $first: "$auther._id" },
@@ -73,15 +79,20 @@ const getAllPosts = async (req, res, next) => {
 };
 
 const add = async (req, res, next) => {
-  const { value, error } = addValidation({...req.body,auther:req.admin._id});
+  const { value, error } = addValidation({
+    ...req.body,
+    auther: req.admin._id,
+  });
   if (error) {
- 
     return res.status(400).json({
       message: error.details[0].message,
     });
   }
 
-  const post = await new PostModel({...req.body,auther:req.admin._id}).save();
+  const post = await new PostModel({
+    ...req.body,
+    auther: req.admin._id,
+  }).save();
   res.status(200).json(post);
 };
 const del = async (req, res, next) => {
@@ -124,7 +135,7 @@ const getAllPostsAdmin = async (req, res, next) => {
 };
 const getPostsByStatus = async (req, res, next) => {
   const { status } = req.params;
-  console.log(status)
+  console.log(status);
   const posts = await PostModel.find({ status });
   res.status(200).json(posts);
 };
