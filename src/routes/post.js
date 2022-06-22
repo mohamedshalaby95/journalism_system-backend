@@ -31,10 +31,12 @@ router.post(
 router.delete("/delete", [authAdmin, authReviewer], del);
 router.put("/update", [authAdmin, authEditor], update);
 // ______admins_____
-router.get("/admin/all", [authAdmin, authReviewer], getAllPostsAdmin);
+router.get("/admin/all", 
+// [authAdmin, authReviewer], 
+getAllPostsAdmin);
 router.get(
   "/admin/status/:status",
-  [authAdmin, authReviewer],
+  // [authAdmin, authReviewer],
   getPostsByStatus
 );
 router.get("/admin/accept/:id", [authAdmin, authReviewer], acceptPost);
