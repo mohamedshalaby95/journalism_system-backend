@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const _ = require("lodash");
 
 async function addAdmin(req, res) {
-  console.log(req.body);
+
   const { error } = adminValidation(req.body);
 
   if (error) {
@@ -25,13 +25,14 @@ async function addAdmin(req, res) {
       "email",
       "password",
       "image",
+      "brief",
       "role",
     ])
   );
   admin = await admin.save();
 
   const token = admin.generatetoken();
-  admin = _.pick(admin, ["_id","firstName", "lastName", "image", "role"]);
+  admin = _.pick(admin, ["_id","firstName", "lastName", "image", "role","brief"]);
 
   res.status(201).send({ ...admin, token });
 }
@@ -59,6 +60,7 @@ async function updateAdmin(req, res) {
       password: req.body.password,
       role: req.body.role,
       image: req.body.image,
+      brief:req.body.brief
     },
   }, {
     new: true,
@@ -67,7 +69,7 @@ async function updateAdmin(req, res) {
   });
  admin = await admin.save();
   const token =admin.generatetoken();
- admin = _.pick(admin, ["firstName", "lastName", "image", "role"]);
+ admin = _.pick(admin, ["firstName", "lastName", "image", "role","brief"]);
 
   res.status(200).send({ ...admin, token });
  
@@ -78,7 +80,7 @@ async function getAdmins(req, res) {
   // console.log("here",admins)
  let admins = await adminModel.find({})
 
- admins = admins.map(admin=> _.pick(admin, ["_id","firstName", "lastName", "email", "role"]))
+ admins = admins.map(admin=> _.pick(admin, ["_id","firstName", "lastName", "email", "role","brief"]))
  res.status(200).send(admins );
 }
 

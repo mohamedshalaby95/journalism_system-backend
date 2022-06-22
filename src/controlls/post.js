@@ -140,6 +140,7 @@ const cancelPost = async (req, res, next) => {
   const { id } = req.params;
   const postAck = await PostModel.updateOne(
     { _id: id },
+    
     { status: "canceled" }
   );
   res.status(200).json(id);

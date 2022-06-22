@@ -23,6 +23,10 @@ const adminSchema = new Schema({
       type: String,
        required: true
      },
+     brief:{
+      type:String,
+      default:""
+    },
   image:{
       type:String,
       default:""
