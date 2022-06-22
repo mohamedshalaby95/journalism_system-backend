@@ -7,6 +7,7 @@ const {
 } = require("../validations/post");
 
 const getPostById = async (req, res, next) => {
+
   const id = req.params.id;
   const post = await PostModel.findById(id).populate("auther",["firstName","lastName","image"])
   if (!post) {
