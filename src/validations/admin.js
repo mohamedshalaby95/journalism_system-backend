@@ -12,6 +12,7 @@ module.exports = (body) => {
       tlds: { allow: ["com", "net"] },
     }),
     image:Joi.string(),
+    brief:Joi.string(),
     role:Joi.string().required()
   });
   return Schema.validate(body);

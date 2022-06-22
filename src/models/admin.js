@@ -15,19 +15,23 @@ const adminSchema = new Schema({
     minlength: 3,
   },
   email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    default: "",
-  },
-  role: {
+       type: String, 
+       required: true,
+        unique: true 
+    },
+  password: { 
+      type: String,
+       required: true
+     },
+     brief:{
+      type:String,
+      default:""
+    },
+  image:{
+      type:String,
+      default:""
+    },
+  role:{
     type: String,
     enum: ["administrator", "editor", "reviewer"],
     required: true,
