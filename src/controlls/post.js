@@ -8,7 +8,7 @@ const {
 
 const getPostById = async (req, res, next) => {
   const id = req.params.id;
-  const post = await PostModel.findById(id);
+  const post = await PostModel.findById(id).populate("auther",["firstName","lastName","image"])
   if (!post) {
     return res.status(400).json({
       message: "this post dosen't exist",
