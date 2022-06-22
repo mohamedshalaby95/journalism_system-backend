@@ -28,7 +28,9 @@ router.post("/add", [authAdmin], add);
 router.delete("/delete/:id", [authAdmin], del);
 // [authAdmin, authReviewer]
 
-router.put("/update", [authAdmin, authEditor], update);
+router.put("/update",
+//  [authAdmin, authEditor],
+  update);
 // ______admins_____
 router.get("/admin/all", 
 // [authAdmin, authReviewer], 
