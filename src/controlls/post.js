@@ -177,6 +177,21 @@ const mostRecently = async (req, res, next) => {
   const posts = await PostModel.find().sort({ createdAt: "desc" }).limit(4);
   return res.status(200).json(posts);
 };
+const getIntrested = async (req, res, next) => {
+  const { _id } = req.user;
+  const userData = await UserModel.findOne({_id});
+  const posts = await PostModel.find();
+  console.log(userData)
+  if (userData.intersted.length) {
+   const filteredPosts= posts.filter(post=>post.category===userData.intersted[Math.floor(Math.random() * userData.intersted.length)]).slice(0,4)
+   res.status(200).json(filteredPosts)
+  }
+  else {
+    const filteredPosts=posts.sort(() => Math.random() - 0.5).slice(0,4)
+     res.status(200).json(filteredPosts)
+  }
+};
+
 module.exports = {
   getAllPosts,
   add,
@@ -191,4 +206,5 @@ module.exports = {
   addView,
   mostViewed,
   mostRecently,
+  getIntrested
 };
