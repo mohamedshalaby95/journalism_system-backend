@@ -80,7 +80,7 @@ const getCategoryPostsBycategoryName =async(req,res,next)=>{
 }
 const getByCategory=async(req,res,next)=>{
   const {categoryId} = req.params;
-const subCategories = await SubCategoriesModel.findOne({parent:categoryId})
+const subCategories = await SubCategoriesModel.find({parent:categoryId})
  res.status(200).json(subCategories) ; 
 }
 module.exports = {
