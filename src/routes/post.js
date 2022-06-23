@@ -3,6 +3,7 @@ const authMiddleware = require("../middelewares/auth");
 const authEditor = require("../middelewares/editor");
 const authReviewer = require("../middelewares/reviewer");
 const authAdmin = require("../middelewares/adminAuth");
+const auth = require("../middelewares/auth");
 const {
   getAllPosts,
   add,
@@ -17,6 +18,7 @@ const {
   addView,
   mostViewed,
   mostRecently,
+  getIntrested
 } = require("../controlls/post");
 const router = express.Router();
 
@@ -53,4 +55,5 @@ router.get(
 router.patch("/add_view/:id", addView);
 router.get("/most_viewed", mostViewed);
 router.get("/most_recently", mostRecently);
+router.get("/intrests",[auth],getIntrested);
 module.exports = router;
