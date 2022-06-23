@@ -1,6 +1,7 @@
 const categoryValidators = require("../validations/CategoryValidators");
 const Category = require("../models/Category");
 const PostsModel =require("../models/Post")
+const SubCategoriesModel = require('../models/SubCategory')
 
 const addCategory = async (req, res) => {
   const { error } = categoryValidators(req.body);
@@ -77,10 +78,15 @@ const getCategoryPostsBycategoryName =async(req,res,next)=>{
   const {category}=req.params
    const posts=await PostsModel.find({category})
 }
-
+const getByCategory=async(req,res,next)=>{
+  const {categoryId} = req.params;
+const subCategories = await SubCategoriesModel.findOne({parent:categoryId})
+ res.status(200).json(subCategories) ; 
+}
 module.exports = {
   deleteCategory,
   addCategory,
   getAllCategories,
   updateCategory,
+  getByCategory
 };
