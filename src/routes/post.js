@@ -19,7 +19,8 @@ const {
   mostViewed,
   mostRecently,
   getIntrested,
-  getPostsBySubCategory
+  getPostsBySubCategory,
+  getPostsByCategory
 } = require("../controlls/post");
 const router = express.Router();
 
@@ -58,4 +59,5 @@ router.get("/most_viewed", mostViewed);
 router.get("/most_recently", mostRecently);
 router.get("/intrests",[auth],getIntrested);
 router.get("/get_posts_by_sub_category/:subCategoryName",getPostsBySubCategory);
+router.get('/get-post-by-category/:category',getPostsByCategory)
 module.exports = router;
