@@ -24,7 +24,7 @@ const Post = new schema(
     },
     likes: [{  user: { type: schema.Types.ObjectId, ref: "user" }} ],
     comments: [
-      { commentText: String, user: { type: schema.Types.ObjectId, ref: "user" } },
+      {timestamp: Date, commentText: String, user: { type: schema.Types.ObjectId, ref: "user" } },
     ],
     // comments: [
     //   {  },
