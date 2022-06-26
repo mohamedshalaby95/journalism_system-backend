@@ -4,7 +4,7 @@ const adminAuth = require("../middelewares/adminAuth");
 const administrator = require("../middelewares/administrator");
 
 router.get("/getAll", SubCategoryController.getAll);
-// router.get("/:category", SubCategoryController.getAllSubCategoriesByCategory);
+router.get("/:category", SubCategoryController.getAllSubCategoriesByCategory);
 
 router.post("/",
 // [adminAuth,administrator], 

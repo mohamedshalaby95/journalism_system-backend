@@ -22,10 +22,13 @@ const Post = new schema(
       type: String,
       required: true,
     },
-    likes: [{ type: schema.Types.ObjectId, ref: "User" }],
+    likes: [{  user: { type: schema.Types.ObjectId, ref: "user" }} ],
     comments: [
-      { comment: String, user: { type: schema.Types.ObjectId, ref: "User" } },
+      { commentText: String, user: { type: schema.Types.ObjectId, ref: "user" } },
     ],
+    // comments: [
+    //   {  },
+    // ],
     auther: { type: schema.Types.ObjectId, ref: "admin", required: true },
     region: {
       type: String,
