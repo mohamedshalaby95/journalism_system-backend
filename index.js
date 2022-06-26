@@ -45,11 +45,13 @@ app.use("/user", userRouter);
 app.post("/comment", auth, async (req, res) => {
   const { body } = req;
 
-  console.log(req.user._id);
   const data = {
     ...body,
     user: req.user._id,
+    timestamp: new Date(),
   };
+
+  console.log(data);
 
   const { postId } = req.body;
 

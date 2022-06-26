@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 async function addUser(req, res, next) {
  
-  
+  console.log(req.body)
   const { error } = userValidation(req.body);
 
   if (error) {
@@ -68,7 +68,7 @@ async function updateUser(req, res) {
   });
   user = await user.save();
   const token=user.generatetoken()
-  user=_.pick(user,["firstName","lastName","image","intersted"])
+  user=_.pick(user,["firstName","lastName","image","intersted","email"])
  
   res.status(200).send({...user,token})
 }
