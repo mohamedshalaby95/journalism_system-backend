@@ -83,6 +83,7 @@ const getByCategory=async(req,res,next)=>{
 const subCategories = await SubCategoriesModel.find({parent:categoryId})
  res.status(200).json(subCategories) ; 
 }
+
 module.exports = {
   deleteCategory,
   addCategory,
