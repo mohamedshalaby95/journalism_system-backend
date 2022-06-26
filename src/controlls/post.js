@@ -204,6 +204,12 @@ const getIntrested = async (req, res, next) => {
      res.status(200).json(filteredPosts)
   }
 };
+const getPostsBySubCategory=async(req,res,next)=>{
+  const {subCategoryName} = req.params;
+  const posts=await PostModel.find({subCategory:subCategoryName})
+  res.status(200).json(posts);
+
+}
 
 module.exports = {
   getAllPosts,
@@ -219,5 +225,6 @@ module.exports = {
   addView,
   mostViewed,
   mostRecently,
-  getIntrested
+  getIntrested,
+  getPostsBySubCategory
 };
