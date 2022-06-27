@@ -29,27 +29,27 @@ router.get("/get_all", [authMiddleware], getAllPosts);
 router.get("/get_one/:id", getPostById);
 
 router.post("/add", [authAdmin], add);
-// [authAdmin, authEditor]
+[authAdmin, authEditor]
 router.delete("/delete/:id", [authAdmin], del);
-// [authAdmin, authReviewer]
+[authAdmin, authReviewer]
 
 router.put("/update",
-//  [authAdmin, authEditor],
+ [authAdmin, authEditor],
   update);
 // ______admins_____
 router.get("/admin/all", 
-// [authAdmin, authReviewer], 
+[authAdmin, authReviewer], 
 getAllPostsAdmin);
 router.get(
   "/status/:status",
-  // [authAdmin, authReviewer],
+  [authAdmin, authReviewer],
      [authAdmin],
   getPostsByStatus
 );
 router.get("/admin/accept/:id", [authAdmin], acceptPost);
-// [authAdmin, authReviewer]
+[authAdmin, authReviewer]
 router.get("/admin/cancel/:id", [authAdmin], cancelPost);
-// [authAdmin, authReviewer]
+[authAdmin, authReviewer]
 router.get(
   "/admin/get_all_by_editor_id/:id",
   [authAdmin, authEditor],
