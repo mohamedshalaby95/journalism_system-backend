@@ -99,9 +99,8 @@ app.post("/like", auth, async (req, res) => {
       }
     );
     pusher.trigger("magz", "new-like", like);
-    console.log("Done",like);
 
-    res.json(like);
+    res.json(false);
   } else {
     const like = await PostModel.findOneAndUpdate(
       { _id: postId },
@@ -114,7 +113,7 @@ app.post("/like", auth, async (req, res) => {
     );
     pusher.trigger("magz", "new-like", like);
 
-    res.json(like);
+    res.json(true);
   }
 });
 
