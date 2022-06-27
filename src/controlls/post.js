@@ -136,7 +136,7 @@ const update = async (req, res, next) => {
 // ---------------------------------administrations------------------------------
 const getAllPostsAdmin = async (req, res, next) => {
   const { _id } = req.admin;
-  const posts = await PostModel.find({ _id });
+  const posts = await PostModel.find({ auther:_id });
   res.status(200).json(posts);
 };
 const getPostsByStatus = async (req, res, next) => {
