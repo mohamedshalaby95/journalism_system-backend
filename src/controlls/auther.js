@@ -4,13 +4,14 @@ const autherData = async (req, res, next) => {
   const { id } = req.params;
   const userInfo = await AdminModel.find({ role: "editor", _id: id });
   const posts = await PostsModel.find({ auther: id });
-  let data={}
+  let data = {};
   if (userInfo.length > 0) {
-     data = {
+    data = {
       fullName: userInfo[0].firstName + " " + userInfo[0].lastName,
-      image:userInfo[0].image,
+      image: userInfo[0].image,
       posts: posts,
       numOfPosts: posts.length,
+      brief: userInfo.brief,
     };
   } else {
     return res.status(404).json({ messgae: "user not found" });
