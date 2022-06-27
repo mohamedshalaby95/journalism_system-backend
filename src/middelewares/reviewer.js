@@ -1,6 +1,6 @@
 module.exports=( req,res,next)=>{
 
-    if(req.admin&&req.admin.role==="reviewer"){
+    if(req.admin&&req.admin.role==="editor"){
         next()
     }
     else{
