@@ -135,7 +135,8 @@ const update = async (req, res, next) => {
 
 // ---------------------------------administrations------------------------------
 const getAllPostsAdmin = async (req, res, next) => {
-  const posts = await PostModel.find();
+  const { _id } = req.admin;
+  const posts = await PostModel.find({ _id });
   res.status(200).json(posts);
 };
 const getPostsByStatus = async (req, res, next) => {
@@ -204,35 +205,30 @@ const mostRecently = async (req, res, next) => {
 //   }
 // };
 const getIntrested = async (req, res, next) => {
-  console.log("req user here",req.user)
+  console.log("req user here", req.user);
   // const { _id } = req.user;
   const posts = await PostModel.find();
-  if(req.user ){
+  if (req.user) {
     console.log("if");
-    const userData= await UserModel.findById({_id:req.user. _id });
-    console.log("user data"+userData)
-   if(userData.intersted.length){
-    const filteredPosts = posts
-    .filter(
-      (post) =>
-        post.category ===
-        userData.intersted[
-          Math.floor(Math.random() * userData.intersted.length)
-        ]
-    )
-    .slice(0, 4);
-  res.status(200).json(filteredPosts);
-   }
-   else{
-   
-    const filteredPosts = posts.sort(() => Math.random() - 0.5).slice(0, 4);
-    res.status(200).json(filteredPosts);
-   }
-
-  }
-
-  else {
-    console.log("else")
+    const userData = await UserModel.findById({ _id: req.user._id });
+    console.log("user data" + userData);
+    if (userData.intersted.length) {
+      const filteredPosts = posts
+        .filter(
+          (post) =>
+            post.category ===
+            userData.intersted[
+              Math.floor(Math.random() * userData.intersted.length)
+            ]
+        )
+        .slice(0, 4);
+      res.status(200).json(filteredPosts);
+    } else {
+      const filteredPosts = posts.sort(() => Math.random() - 0.5).slice(0, 4);
+      res.status(200).json(filteredPosts);
+    }
+  } else {
+    console.log("else");
     const filteredPosts = posts.sort(() => Math.random() - 0.5).slice(0, 4);
     res.status(200).json(filteredPosts);
   }
