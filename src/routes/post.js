@@ -20,7 +20,8 @@ const {
   mostRecently,
   getIntrested,
   getPostsBySubCategory,
-  getPostsByCategory
+  getPostsByCategory,
+  searchByKeyWord
 } = require("../controlls/post");
 const router = express.Router();
 
@@ -60,4 +61,5 @@ router.get("/most_recently", mostRecently);
 router.get("/intrests",[auth],getIntrested);
 router.get("/get_posts_by_sub_category/:subCategoryName",getPostsBySubCategory);
 router.get('/get-post-by-category/:category',getPostsByCategory)
+router.get('/search/:keyWord',searchByKeyWord)
 module.exports = router;
