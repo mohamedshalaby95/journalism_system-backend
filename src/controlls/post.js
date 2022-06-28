@@ -239,13 +239,25 @@ const getIntrested = async (req, res, next) => {
 };
 const getPostsBySubCategory = async (req, res, next) => {
   const { subCategoryName } = req.params;
-  const posts = await PostModel.find({ subCategory: subCategoryName });
+  const posts = await PostModel.find({ subCategory: subCategoryName }).populate("auther", [
+      "firstName",
+      "lastName",
+      "image",
+      "brief",
+    ]);
+  
   res.status(200).json(posts);
 };
 const getPostsByCategory = async (req, res, next) => {
   const { category } = req.params;
   console.log(category);
-  const posts = await PostModel.find({ category: `${category}` });
+  const posts = await PostModel.find({ category: `${category}` }).populate("auther", [
+      "firstName",
+      "lastName",
+      "image",
+      "brief",
+    ]);
+  
   res.status(200).json(posts);
 };
 const searchByKeyWord = async (req, res, next) => {
