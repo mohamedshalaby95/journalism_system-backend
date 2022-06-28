@@ -14,7 +14,7 @@ const addSubCategory = async (req, res) => {
     
 
     const category = await Category.findOne({ title: req.body.parent });
-    console.log( category)
+ 
 
     if (category) {
       const newSubCategory = await new SubCategory({
@@ -101,7 +101,7 @@ const subCategories= await  SubCategory.find();
 res.status(200).send(subCategories);
 }
 const getAll=async(req,res,next)=>{
-  console.log("woked")
+
   const posts = await SubCategory.aggregate([
     {
       "$lookup": {

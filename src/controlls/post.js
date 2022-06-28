@@ -67,7 +67,7 @@ const getAllPosts = async (req, res, next) => {
   ]);
   if (req.user) {
     const { intersted } = await UserModel.findById(req.user._id);
-    console.log(intersted);
+  
     const data = posts.filter((element) =>
       intersted.find((interstedElement) => interstedElement == element._id)
     );
@@ -136,7 +136,7 @@ const getAllPostsAdmin = async (req, res, next) => {
 };
 const getPostsByStatus = async (req, res, next) => {
   const { status } = req.params;
-  console.log(status);
+
   const posts = await PostModel.find({ status });
   res.status(200).json(posts);
 };

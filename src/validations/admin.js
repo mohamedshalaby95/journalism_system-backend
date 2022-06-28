@@ -13,7 +13,8 @@ module.exports = (body) => {
     }),
     image:Joi.string(),
     brief:Joi.string(),
-    role:Joi.string().required()
+    role:Joi.string().required(),
+    notify:Joi.array()
   });
   return Schema.validate(body);
 };

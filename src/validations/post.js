@@ -8,7 +8,7 @@ const addValidation= (body) => {
     category: Joi.string().empty('').required(),
     subCategory: Joi.string().empty('').required(),
     auther: Joi.string().empty('').required(),
-    regien: Joi.string().empty('').required(),
+    region: Joi.string().empty('').required(),
   });
   return Schema.validate(body);
 }
@@ -27,7 +27,7 @@ const delValidation=(body) => {
       category: Joi.string().empty('').required(),
       subCategory: Joi.string().empty('').required(),
       auther: Joi.string().empty('').required(),
-      regien: Joi.string().empty('').required(),
+      region: Joi.string().empty('').required(),
     });
     return Schema.validate(body);
   }

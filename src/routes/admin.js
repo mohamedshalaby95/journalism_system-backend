@@ -15,5 +15,6 @@ router.patch("/",
 //adminAuth,
 adminControll.updateAdmin)
 router.delete("/:id",adminControll.deleteAdmin)
+router.get("/notify",adminAuth,adminControll.getAdminNotify)
 module.exports=router  
 
