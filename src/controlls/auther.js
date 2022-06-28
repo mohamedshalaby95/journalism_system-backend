@@ -12,7 +12,7 @@ const autherData = async (req, res, next) => {
       posts: posts,
       numOfPosts: posts.length,
       // brief: userInfo.brief,
-      // brief: "user brief",
+      brief: "user brief",
     };
   } else {
     return res.status(404).json({ messgae: "user not found" });
