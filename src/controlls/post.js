@@ -30,6 +30,8 @@ const getPostById = async (req, res, next) => {
 
 const getAllPosts = async (req, res, next) => {
   const posts = await PostModel.aggregate([
+    { $match : { status : "accepted" } }
+    ,
     {
       $lookup: {
         from: "admins",
