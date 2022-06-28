@@ -28,7 +28,7 @@ const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
     if (categories) {
-      console.log("fetched",categories)
+     
       res.status(200).send(categories);
     } else {
       res.status(404).send("Data Not Found");
@@ -56,7 +56,7 @@ const updateCategory = async (req, res) => {
       res.status(400).send("Category Not Found");
     }
   } catch (err) {
-    console.log(err)
+   
     res.status(500).send("Server Error");
   }
 };

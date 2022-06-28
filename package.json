@@ -33,6 +33,10 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.3.5",
     "nodemon": "^2.0.16",
+
+    "socket.io": "^4.5.1"
+
     "pusher": "^5.1.0-beta"
+
   }
 }

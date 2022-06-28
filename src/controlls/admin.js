@@ -93,4 +93,12 @@ async function deleteAdmin(req, res) {
 
  res.status(200).send(admin._id );
 }
-module.exports = { addAdmin,updateAdmin ,getAdmins,deleteAdmin};
+async function getAdminNotify(req, res) {
+
+  // console.log("here",admins)
+ let admin= await adminModel.findById(req.admin._id)
+
+
+ res.status(200).send(admin.notify );
+}
+module.exports = { addAdmin,updateAdmin ,getAdmins,deleteAdmin,getAdminNotify};

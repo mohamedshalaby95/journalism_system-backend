@@ -29,7 +29,7 @@ async function login(req,res){
     throw new Error(`the email or password not valid `);  
  }
  const token=admin.generatetoken()
- admin=_.pick(admin,["firstName","lastName","image","role"])
+ admin=_.pick(admin,["firstName","lastName","image","role","email"])
 
  res.status(200)
 .send({...admin,token})

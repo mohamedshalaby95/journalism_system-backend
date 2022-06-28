@@ -31,6 +31,10 @@ const adminSchema = new Schema({
       type:String,
       default:""
     },
+    notify:{
+      type:[],
+      default:[]
+    },
   role:{
     type: String,
     enum: ["administrator", "editor", "reviewer"],
