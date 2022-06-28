@@ -1,4 +1,3 @@
-
 const express = require("express");
 require("express-async-errors");
 const PostModel = require("./src/models/Post");
@@ -31,7 +30,6 @@ const io = require("socket.io")(server, {
 });
 
 const Pusher = require("pusher");
-
 
 const port = process.env.PORT || 4000;
 const auth = require("./src/middelewares/auth");
@@ -78,7 +76,7 @@ io.on("connection", (socket) => {
       .populate("auther", ["email", "_id"]);
 
     const notifyForSpec = getUser(post.auther.email);
-   
+
     if (notifyForSpec) {
       socket.broadcast
         .to(notifyForSpec.socketId)
@@ -104,11 +102,9 @@ io.on("connection", (socket) => {
       .findById(id)
       .populate("auther", ["email", "_id"]);
 
-
     const notifyForSpec = getUser(post.auther.email);
 
     if (notifyForSpec) {
-    
       socket.broadcast
         .to(notifyForSpec.socketId)
         .emit("hamada", { notify: ` you post with ${post.title} is canncel` });
@@ -135,13 +131,11 @@ io.on("connection", (socket) => {
     const onlineReviewer = usersConnect.map((el) => {
       for (let counter = 0; counter < reviewer.length; counter++) {
         if (reviewer[counter].email === el.email) {
-       
           return reviewer[counter].email;
         }
       }
     });
 
-  
     let reviewerOnlineNow;
     for (let i = 0; i < onlineReviewer.length; i++) {
       if (onlineReviewer[i] !== undefined) {
@@ -238,8 +232,8 @@ app.post("/like", auth, async (req, res) => {
     console.log(post.likes[userIndex]);
     const like = await PostModel.findOneAndUpdate(
       { _id: postId },
-      {$pull : {likes : post.likes[userIndex] }},
-      
+      { $pull: { likes: post.likes[userIndex] } },
+
       {
         new: true,
         runValidators: true,
