@@ -12,7 +12,7 @@ router.post("/",
 adminControll.addAdmin)
 router.get("/",adminControll.getAdmins)
 router.patch("/",
-//adminAuth,
+adminAuth,
 adminControll.updateAdmin)
 router.delete("/:id",adminControll.deleteAdmin)
 router.get("/notify",adminAuth,adminControll.getAdminNotify)
