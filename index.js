@@ -9,7 +9,7 @@ app.use(cors());
 //   origin: "http://localhost:3000",
 // };
 const postModel = require("./src/models/Post");
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 const server = require("http").createServer(app);
 const userRouter = require("./src/routes/users");
 const handleError = require("./src/middelewares/handelError");
