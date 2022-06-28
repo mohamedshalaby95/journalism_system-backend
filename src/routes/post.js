@@ -28,28 +28,23 @@ const router = express.Router();
 router.get("/get_all", [authMiddleware], getAllPosts);
 router.get("/get_one/:id", getPostById);
 
-router.post("/add", [authAdmin], add);
-[authAdmin, authEditor]
-router.delete("/delete/:id", [authAdmin], del);
-[authAdmin, authReviewer]
+router.post("/add", [authAdmin, authEditor], add);
+
+router.delete("/delete/:id",[authAdmin, authEditor], del);
+
 
 router.put("/update",
  [authAdmin, authEditor],
   update);
 // ______admins_____
 router.get("/admin/all", 
-[authAdmin, authReviewer], 
+[authAdmin], 
 getAllPostsAdmin);
-router.get(
-  "/status/:status",
-  [authAdmin, authReviewer],
-     [authAdmin],
-  getPostsByStatus
-);
-router.get("/admin/accept/:id", [authAdmin], acceptPost);
-[authAdmin, authReviewer]
-router.get("/admin/cancel/:id", [authAdmin], cancelPost);
-[authAdmin, authReviewer]
+router.get("/status/:status",[authAdmin, authReviewer],getPostsByStatus);
+router.get("/admin/accept/:id",  [authAdmin, authReviewer], acceptPost);
+
+router.get("/admin/cancel/:id", [authAdmin, authReviewer], cancelPost);
+
 router.get(
   "/admin/get_all_by_editor_id/:id",
   [authAdmin, authEditor],
