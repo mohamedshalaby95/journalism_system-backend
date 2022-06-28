@@ -18,6 +18,6 @@ router.delete(
 //   [adminAuth, administrator],
   CategoryController.deleteCategory
 );
-
+router.get("/get_subcategories_by_category/:categoryId",CategoryController.getByCategory)
 
 module.exports = router;

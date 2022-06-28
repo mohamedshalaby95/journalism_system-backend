@@ -13,6 +13,6 @@ router.get("/",
 //[authAdmin,adminstritorRole],
 userControll.getUser)
 router.patch("/",
-//[authUser],
+[authUser],
 userControll.updateUser)
 module.exports=router

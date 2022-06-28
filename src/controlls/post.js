@@ -9,12 +9,17 @@ const {
 const getPostById = async (req, res, next) => {
 
   const id = req.params.id;
-  const post = await PostModel.findById(id).populate("auther", [
-    "firstName",
-    "lastName",
-    "image",
-    "brief",
-  ]);
+  // const post = await PostModel.findById(id).populate("auther", [
+  //   "firstName",
+  //   "lastName",
+  //   "image",
+  //   "brief",
+  // ]);
+
+  const post = await PostModel.findById(id)
+    .populate("auther", ["firstName", "lastName", "image", "brief"])
+    .populate("comments.user", ["firstName", "lastName", "image"]);
+
   if (!post) {
     return res.status(400).json({
       message: "this post dosen't exist",
@@ -131,7 +136,8 @@ const update = async (req, res, next) => {
 
 // ---------------------------------administrations------------------------------
 const getAllPostsAdmin = async (req, res, next) => {
-  const posts = await PostModel.find();
+  const { _id } = req.admin;
+  const posts = await PostModel.find({ auther:_id });
   res.status(200).json(posts);
 };
 const getPostsByStatus = async (req, res, next) => {
@@ -178,6 +184,76 @@ const mostRecently = async (req, res, next) => {
   const posts = await PostModel.find().sort({ createdAt: "desc" }).limit(4);
   return res.status(200).json(posts);
 };
+// const getIntrested = async (req, res, next) => {
+//   const { _id } = req.user;
+//   const userData = await UserModel.findOne({ _id });
+//   const posts = await PostModel.find();
+//   console.log(userData);
+//   if (userData.intersted.length) {
+//     const filteredPosts = posts
+//       .filter(
+//         (post) =>
+//           post.category ===
+//           userData.intersted[
+//             Math.floor(Math.random() * userData.intersted.length)
+//           ]
+//       )
+//       .slice(0, 4);
+//     res.status(200).json(filteredPosts);
+//   } else {
+//     const filteredPosts = posts.sort(() => Math.random() - 0.5).slice(0, 4);
+//     res.status(200).json(filteredPosts);
+//   }
+// };
+const getIntrested = async (req, res, next) => {
+  console.log("req user here", req.user);
+  // const { _id } = req.user;
+  const posts = await PostModel.find();
+  if (req.user) {
+    console.log("if");
+    const userData = await UserModel.findById({ _id: req.user._id });
+    console.log("user data" + userData);
+    if (userData.intersted.length) {
+      const filteredPosts = posts
+        .filter(
+          (post) =>
+            post.category ===
+            userData.intersted[
+              Math.floor(Math.random() * userData.intersted.length)
+            ]
+        )
+        .slice(0, 4);
+      res.status(200).json(filteredPosts);
+    } else {
+      const filteredPosts = posts.sort(() => Math.random() - 0.5).slice(0, 4);
+      res.status(200).json(filteredPosts);
+    }
+  } else {
+    console.log("else");
+    const filteredPosts = posts.sort(() => Math.random() - 0.5).slice(0, 4);
+    res.status(200).json(filteredPosts);
+  }
+};
+const getPostsBySubCategory = async (req, res, next) => {
+  const { subCategoryName } = req.params;
+  const posts = await PostModel.find({ subCategory: subCategoryName });
+  res.status(200).json(posts);
+};
+const getPostsByCategory = async (req, res, next) => {
+  const { category } = req.params;
+  console.log(category);
+  const posts = await PostModel.find({ category: `${category}` });
+  res.status(200).json(posts);
+};
+const searchByKeyWord = async (req, res, next) => {
+  const { keyWord } = req.params;
+  const regexString = keyWord.split(" ").join("|");
+  const posts = await PostModel.find({
+    title: { $regex: `^${regexString}`, $options: "i" },
+  });
+  res.status(200).json(posts);
+};
+
 module.exports = {
   getAllPosts,
   add,
@@ -192,4 +268,8 @@ module.exports = {
   addView,
   mostViewed,
   mostRecently,
+  getIntrested,
+  getPostsBySubCategory,
+  getPostsByCategory,
+  searchByKeyWord,
 };
