@@ -38,7 +38,7 @@ router.put("/update",
   update);
 // ______admins_____
 router.get("/admin/all", 
-[authAdmin, authReviewer], 
+[authAdmin], 
 getAllPostsAdmin);
 router.get(
   "/status/:status",
