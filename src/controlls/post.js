@@ -85,6 +85,7 @@ const getAllPosts = async (req, res, next) => {
 };
 
 const add = async (req, res, next) => {
+  console.log(req.body)
   const { value, error } = addValidation({
     ...req.body,
     auther: req.admin._id,
