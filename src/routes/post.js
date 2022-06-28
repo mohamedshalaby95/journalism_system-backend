@@ -40,7 +40,7 @@ router.put("/update",
 router.get("/admin/all", 
 [authAdmin], 
 getAllPostsAdmin);
-router.get("/status/:status",[authAdmin, authReviewer],getPostsByStatus);
+router.get("/status/:status",[authAdmin],getPostsByStatus);
 router.get("/admin/accept/:id",  [authAdmin, authReviewer], acceptPost);
 
 router.get("/admin/cancel/:id", [authAdmin, authReviewer], cancelPost);
