@@ -48,10 +48,10 @@ app.use(express.json());
 require("dotenv/config");
 require("./config/connectdb")();
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 // socket io start
 let usersConnect = [];
