@@ -30,7 +30,7 @@ const io = require("socket.io")(server, {
 });
 
 const Pusher = require("pusher");
-var cors = require("cors");
+
 
 const port = process.env.PORT || 4000;
 const auth = require("./src/middelewares/auth");
