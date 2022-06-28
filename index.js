@@ -4,9 +4,10 @@ require("express-async-errors");
 const PostModel = require("./src/models/Post");
 const app = express();
 var cors = require("cors");
-var corsOptions = {
-  origin: "http://localhost:3000",
-};
+app.use(cors());
+// var corsOptions = {
+//   origin: "http://localhost:3000",
+// };
 const postModel = require("./src/models/Post");
 app.use(cors(corsOptions));
 const server = require("http").createServer(app);
